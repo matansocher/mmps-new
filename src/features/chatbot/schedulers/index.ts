@@ -4,7 +4,6 @@ export { exerciseReminder } from './exercise-reminder';
 export { footballPredictions } from './football-predictions';
 export { footballUpdate } from './football-update';
 export { footballPredictionsResults } from './football-predictions-results';
-export { rainAlert } from './rain-alert';
 export { reminderCheck } from './reminder-check';
 export { sportsCalendar } from './sports-calendar';
 export { weeklyExerciseSummary } from './weekly-exercise-summary';
