@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import { env } from 'node:process';
 import { isProd } from '@core/config';
 import { Logger } from '@core/utils';
-// import { BOT_CONFIG as chatbotBotConfig, initChatbot } from '@features/chatbot';
+import { BOT_CONFIG as chatbotBotConfig, initChatbot } from '@features/chatbot';
 import { BOT_CONFIG as coachBotConfig, initCoach } from '@features/coach';
 import { initLangly, BOT_CONFIG as langlyBotConfig } from '@features/langly';
 import { initMagister, BOT_CONFIG as magisterBotConfig } from '@features/magister';
@@ -25,6 +25,7 @@ async function main() {
 
   const shouldInitBot = (config: { id: string }) => isProd || env.LOCAL_ACTIVE_BOT_ID === config.id;
 
+  shouldInitBot(chatbotBotConfig) && (await initChatbot());
   shouldInitBot(coachBotConfig) && (await initCoach());
   shouldInitBot(langlyBotConfig) && (await initLangly());
   shouldInitBot(magisterBotConfig) && (await initMagister());
