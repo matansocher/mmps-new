@@ -1,0 +1,23 @@
+import { tool } from '@langchain/core/tools';
+import { z } from 'zod';
+import { generateMatchResultsString, getSportsMatchesSummary } from '@shared/sports';
+
+const schema = z.object({
+  date: z.string().describe('Date in YYYY-MM-DD format to get match results for'),
+});
+
+async function runner({ date }: z.infer<typeof schema>) {
+  const summaryDetails = await getSportsMatchesSummary(date);
+
+  if (!summaryDetails?.length) {
+    return `No matches found for ${date}.`;
+  }
+
+  return generateMatchResultsString(summaryDetails);
+}
+
+export const matchSummaryTool = tool(runner, {
+  name: 'match_summary',
+  description: 'Get football match results and summaries for a specific date. use the formatted text returned from this tool since it contains markdown for better readability.',
+  schema,
+});
